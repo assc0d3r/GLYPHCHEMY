@@ -386,6 +386,16 @@ java -cp "libs/morphe-cli.jar:libs/gson.jar" tools/bindings/Inventory.java \
 ```
 *(On Windows PowerShell, use `;` instead of `:`)*
 
+### Rebuilding the extension dex
+`src/main/extensions/gboard-patches.rve` is compiled runtime code, not produced by `build.sh`. Its sources live in [`extension/`](extension) with their own Gradle build, so the committed dex can always be reproduced:
+
+```bash
+./tools/build-extension.sh
+```
+
+Requirements (JDK 21+, Android SDK, Morphe Gradle plugin 2.1.2) are documented in [`extension/README.md`](extension/README.md). Rebuild the dex whenever the runtime in `extension/extensions/extension/src` changes.
+
+
 ---
 
 <div align="center">
