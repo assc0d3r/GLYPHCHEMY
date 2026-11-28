@@ -168,6 +168,12 @@ internal enum class RuntimeCallId(internal val encodedAbi: String) {
     ZHUYIN_TRADITIONAL_SIMPLIFIED_TOGGLE_RUNTIME_MAYBE_TOGGLE("Ldev/jason/gboardpatches/extension/zhuyintoggle/GboardZhuyinTraditionalSimplifiedToggleRuntime;->maybeToggle(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z"),
     ZHUYIN_TRADITIONAL_SIMPLIFIED_TOGGLE_RUNTIME_PATCH_INCOMING_SOFT_KEY_METADATA("Ldev/jason/gboardpatches/extension/zhuyintoggle/GboardZhuyinTraditionalSimplifiedToggleRuntime;->patchIncomingSoftKeyMetadata(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
     ZHUYIN_TRADITIONAL_SIMPLIFIED_TOGGLE_RUNTIME_PATCH_POPUP_ACTION("Ldev/jason/gboardpatches/extension/zhuyintoggle/GboardZhuyinTraditionalSimplifiedToggleRuntime;->patchPopupAction(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
+    AT_MENTION_RUNTIME_ON_INPUT_VIEW_STARTED("Ldev/jason/gboardpatches/extension/atmention/AtMentionStripRuntime;->onInputViewStarted(Ljava/lang/Object;Landroid/view/inputmethod/EditorInfo;)V"),
+    AT_MENTION_RUNTIME_ON_SELECTION_UPDATED("Ldev/jason/gboardpatches/extension/atmention/AtMentionStripRuntime;->onSelectionUpdated(Ljava/lang/Object;Landroid/view/View;II)V"),
+    AT_MENTION_RUNTIME_ON_INPUT_WINDOW_HIDDEN("Ldev/jason/gboardpatches/extension/atmention/AtMentionStripRuntime;->onInputWindowHidden()V"),
+    AT_MENTION_RUNTIME_ON_TEXT_CANDIDATES_UPDATED("Ldev/jason/gboardpatches/extension/atmention/AtMentionStripRuntime;->onTextCandidatesUpdated(Ljava/lang/Object;Z)Z"),
+    AT_MENTION_RUNTIME_TRY_SUPPLY_NATIVE_CANDIDATES_FROM_DELEGATE("Ldev/jason/gboardpatches/extension/atmention/AtMentionStripRuntime;->trySupplyNativeCandidatesFromDelegate(Ljava/lang/Object;I)Z"),
+    AT_MENTION_RUNTIME_TRY_HANDLE_NATIVE_CANDIDATE_EVENT("Ldev/jason/gboardpatches/extension/atmention/AtMentionStripRuntime;->tryHandleNativeCandidateEvent(Ljava/lang/Object;Ljava/lang/Object;)Z"),
 }
 
 internal data class RuntimeAbi(

@@ -16,6 +16,7 @@ import dev.jason.gboardpatches.patches.gboard.features.accesspointcount.gboardAc
 import dev.jason.gboardpatches.patches.gboard.features.accesspointsmenu.gboardAccessPointsMenuFeatureMarkerPatch
 import dev.jason.gboardpatches.patches.gboard.features.accesspointsmenu.gboardAccessPointsMenuFlagValuePatch
 import dev.jason.gboardpatches.patches.gboard.features.advancedvoice.gboardAdvancedVoiceFeatureMarkerPatch
+import dev.jason.gboardpatches.patches.gboard.features.atmention.gboardAtMentionSuggestionsPatch
 import dev.jason.gboardpatches.patches.gboard.features.bluetoothmicrophone.gboardBluetoothMicrophoneFeatureMarkerPatch
 import dev.jason.gboardpatches.patches.gboard.features.bluetoothmicrophone.gboardBluetoothMicrophoneFlagValuePatch
 import dev.jason.gboardpatches.patches.gboard.features.backuprestore.gboardBackupRestoreFeatureMarkerPatch
@@ -975,6 +976,7 @@ object GboardPublishedPatchCatalog {
         gintypeThiccTopBarPatch,
         gintypeCustomHoldPopupsPatch,
         gintypeTypingEffectsPatch,
+        gboardAtMentionSuggestionsPatch,
     ).filterTo(linkedSetOf()) { patch -> patch.name != null }
 
     fun publishedInventory(version: String): String {
