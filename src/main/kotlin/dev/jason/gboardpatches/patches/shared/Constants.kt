@@ -2,7 +2,7 @@ package dev.jason.gboardpatches.patches.shared
 
 import app.morphe.patcher.patch.AppTarget
 import app.morphe.patcher.patch.Compatibility
-import dev.jason.gboardpatches.patches.gboard.shared.GBOARD_18_8_TARGETS
+import dev.jason.gboardpatches.patches.gboard.shared.GBOARD_18_8_1_TARGET
 import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardTargetAdmission
 
 internal object Constants {
@@ -19,16 +19,13 @@ internal object Constants {
         apkFileType = GboardTargetAdmission.apkFileType,
         appIconColor = 0x1A73E8,
         signatures = GboardTargetAdmission.signatures,
-        targets = GboardTargetAdmission.versionNames.map { versionName ->
+        // Only 18.8.1 and newer. The suite no longer carries audited tables for the 18.5/18.6
+        // builds, so advertising them would offer patches that cannot resolve their targets.
+        targets = listOf(
             AppTarget(
-                version = versionName,
+                version = GBOARD_18_8_1_TARGET,
                 isExperimental = false,
-            )
-        } + GBOARD_18_8_TARGETS.map { versionName ->
-            AppTarget(
-                version = versionName,
-                isExperimental = false,
-            )
-        },
+            ),
+        ),
     )
 }

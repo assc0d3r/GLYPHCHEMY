@@ -8,12 +8,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.0.3.954559732-release-arm64-v8a",
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.0.3"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -25,12 +20,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.0.3.954559732-release-arm64-v8a",
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.0.3"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -42,12 +32,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.0.3.954559732-release-arm64-v8a",
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.0.3"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -59,9 +44,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -74,9 +56,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -91,9 +70,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -106,9 +82,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -121,8 +94,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -145,8 +116,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -189,8 +158,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -203,8 +170,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -219,8 +184,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -235,8 +198,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -251,8 +212,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -267,8 +226,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -283,8 +240,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -299,8 +254,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -313,8 +266,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -327,8 +278,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -341,8 +290,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -355,8 +302,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -369,8 +314,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -383,8 +326,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -397,8 +338,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -411,8 +350,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -425,8 +362,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -439,8 +374,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -453,8 +386,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -467,8 +398,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -481,8 +410,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -495,8 +422,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -509,8 +434,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -523,8 +446,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -537,8 +458,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -551,8 +470,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -565,8 +482,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -579,8 +494,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -593,8 +506,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -607,8 +518,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -621,8 +530,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -635,8 +542,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -649,8 +554,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -663,8 +566,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -677,8 +578,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -691,8 +590,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -705,8 +602,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -719,8 +614,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -733,8 +626,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -747,8 +638,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -761,8 +650,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -775,8 +662,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -789,8 +674,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -803,8 +686,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -817,8 +698,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -831,8 +710,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -845,8 +722,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -859,8 +734,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -873,8 +746,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -887,8 +758,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -901,8 +770,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -917,8 +784,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -931,8 +796,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -945,7 +808,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -958,7 +820,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -981,7 +842,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -994,7 +854,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1007,7 +866,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1022,7 +880,6 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1035,7 +892,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1048,7 +904,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1107,7 +962,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1120,7 +974,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1133,7 +986,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1146,8 +998,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1160,8 +1010,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1174,10 +1022,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -1189,8 +1034,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1203,8 +1046,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1217,8 +1058,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1231,8 +1070,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1245,10 +1082,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -1260,10 +1094,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -1275,10 +1106,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -1290,8 +1118,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1304,8 +1130,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1318,8 +1142,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1332,8 +1154,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1346,8 +1166,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1360,10 +1178,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
-          "18.8.1.1022711984-beta-arm64-v8a",
-          "18.5.4.993608717-release-arm64-v8a"
+          "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
       "options": []
@@ -1375,8 +1190,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1389,8 +1202,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1403,8 +1214,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1417,8 +1226,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },
@@ -1431,8 +1238,6 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "18.6.3.1002251336-release-arm64-v8a",
-          "18.8.0.1022711984-beta-arm64-v8a",
           "18.8.1.1022711984-beta-arm64-v8a"
         ]
       },

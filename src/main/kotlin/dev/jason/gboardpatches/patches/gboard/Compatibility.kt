@@ -4,25 +4,25 @@ import app.morphe.patcher.patch.ApkFileType
 import app.morphe.patcher.patch.AppTarget
 import app.morphe.patcher.patch.Compatibility
 import app.morphe.patcher.patch.SupportedAbi
-import dev.jason.gboardpatches.patches.gboard.shared.GBOARD_18_8_TARGETS
+import dev.jason.gboardpatches.patches.gboard.shared.GBOARD_18_8_1_TARGET
+import dev.jason.gboardpatches.patches.gboard.shared.GBOARD_18_8_VERSION_CODES
 
 internal const val GBOARD_PACKAGE = "com.google.android.inputmethod.latin"
 
-// Google ships 18.6.3 as separate per-ABI builds whose versionName embeds the ABI. Only the
-// arm64-v8a build (176071766) has been checked against this patch set, so it is the only
-// advertised target; the armeabi-v7a build is deliberately not claimed.
+// Only the 18.8.1 arm64-v8a upload (176124934) is advertised. The older releases this tree used
+// to carry - 18.6.3 and the 18.8.0 upload of the same build number - are dropped: the audited
+// target tables describe 18.8.1, and offering a build the tables were not checked against is how
+// a patch ends up skipping itself on the version the project ships for. The armeabi-v7a build is
+// deliberately not claimed either, since only arm64-v8a has been checked.
 private fun gboardTargets(experimental: Boolean) = listOf(
     AppTarget(
-        version = "18.6.3.1002251336-release-arm64-v8a", minSdk = 26,
-        versionCodes = mapOf(SupportedAbi.ARM64_V8A to 176071766),
+        version = GBOARD_18_8_1_TARGET, minSdk = 26,
+        versionCodes = mapOf(
+            SupportedAbi.ARM64_V8A to GBOARD_18_8_VERSION_CODES.getValue(GBOARD_18_8_1_TARGET),
+        ),
         isExperimental = experimental,
     ),
-) + GBOARD_18_8_TARGETS.map { versionName ->
-    AppTarget(
-        version = versionName, minSdk = 26,
-        isExperimental = experimental,
-    )
-}
+)
 
 private val gboardSignatures = setOf(
     // Google's rotated Gboard signer (Android 13+) and its original signer (Android 7-12).

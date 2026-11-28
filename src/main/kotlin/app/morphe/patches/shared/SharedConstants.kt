@@ -22,7 +22,13 @@ object Constants {
     )
 
     const val GBOARD_PACKAGE_NAME = "com.google.android.inputmethod.latin"
-    const val GBOARD_TARGET_VERSION = "18.6.3.1002251336-release-arm64-v8a"
+
+    /**
+     * The only Gboard build this suite patches. Older releases are dropped on purpose: the
+     * audited target tables now describe 18.8.1 alone, so a patch offered for an older build
+     * would fail to resolve the members it binds to.
+     */
+    const val GBOARD_TARGET_VERSION = "18.8.1.1022711984-beta-arm64-v8a"
 
     val COMPATIBILITY_GBOARD = Compatibility(
         name = "Gboard",
@@ -32,11 +38,7 @@ object Constants {
         targets = listOf(
             AppTarget(
                 version = GBOARD_TARGET_VERSION,
-                description = "Download com.google.android.inputmethod.latin v$GBOARD_TARGET_VERSION from APKMirror"
-            ),
-            AppTarget(
-                version = "18.8.1.1022711984-beta-arm64-v8a",
-                description = "Download com.google.android.inputmethod.latin v18.8.1.1022711984-beta-arm64-v8a (arm64-v8a) from APKMirror"
+                description = "Download com.google.android.inputmethod.latin v$GBOARD_TARGET_VERSION (arm64-v8a) from APKMirror"
             )
         )
     )

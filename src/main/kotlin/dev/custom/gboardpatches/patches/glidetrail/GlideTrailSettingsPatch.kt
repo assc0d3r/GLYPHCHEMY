@@ -34,13 +34,8 @@ val glideTrailSettingsPatch = resourcePatch(
             name = "Gboard",
             packageName = "com.google.android.inputmethod.latin",
             targets = listOf(
-                AppTarget(version = "18.0.3.954559732-release-arm64-v8a"),
-                AppTarget(version = "18.6.3.1002251336-release-arm64-v8a"),
-                AppTarget(version = "18.8.0.1022711984-beta-arm64-v8a"),
                 AppTarget(version = "18.8.1.1022711984-beta-arm64-v8a"),
-                AppTarget(version = "18.5.4.993608717-release-arm64-v8a"),
-                AppTarget(version = "18.0.3"),
-                AppTarget(version = null, isExperimental = true)
+                AppTarget(version = null, isExperimental = true),
             )
         )
     )

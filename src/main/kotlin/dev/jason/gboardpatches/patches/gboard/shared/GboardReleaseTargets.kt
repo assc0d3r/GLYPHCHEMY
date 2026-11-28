@@ -19,11 +19,23 @@ internal const val GBOARD_18_8_1_TARGET = "18.8.1.1022711984-beta-arm64-v8a"
 internal val GBOARD_18_8_TARGETS = listOf(GBOARD_18_8_TARGET, GBOARD_18_8_1_TARGET)
 
 /**
+ * The arm64-v8a manifest version code of each 18.8-line build.
+ *
+ * [dev.jason.gboardpatches.patches.shared.originalInput] checks the manifest build as well as the
+ * name, so the code belongs to the target instead of being left out: a target without one is
+ * unreachable for every patch that preflights the input.
+ */
+internal val GBOARD_18_8_VERSION_CODES = mapOf(
+    GBOARD_18_8_TARGET to 176124766,
+    GBOARD_18_8_1_TARGET to 176124934,
+)
+
+/**
  * Compatibility for one feature that carries an audited 18.8 target set.
  *
- * The shared catalogue entry stays 18.6.3-only on purpose: a patch may only advertise a build it
- * can actually resolve on, so a ported feature states both releases itself and the patches that
- * have not been ported keep the narrow one.
+ * 18.8.1 is the only advertised build: the suite dropped the 18.5/18.6 releases, so a patch states
+ * exactly the release its audited table was checked against. 18.8.0 shares 18.8.1's class list and
+ * audited members but is no longer offered, since the published release targets the newer upload.
  */
 internal fun gboardCompatibility18_8(): Compatibility = Compatibility(
     name = "Gboard",
@@ -31,17 +43,11 @@ internal fun gboardCompatibility18_8(): Compatibility = Compatibility(
     apkFileType = GboardTargetAdmission.apkFileType,
     appIconColor = 0x1A73E8,
     signatures = GboardTargetAdmission.signatures,
-    targets = GboardTargetAdmission.versionNames.map { versionName ->
+    targets = listOf(
         AppTarget(
-            version = versionName,
+            version = GBOARD_18_8_1_TARGET,
             isExperimental = false,
-        )
-    } + AppTarget(
-        version = GBOARD_18_8_TARGET,
-        isExperimental = false,
-    ) + AppTarget(
-        version = GBOARD_18_8_1_TARGET,
-        isExperimental = false,
+        ),
     ),
 )
 

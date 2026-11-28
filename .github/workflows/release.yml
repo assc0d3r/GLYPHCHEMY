@@ -258,16 +258,12 @@ jobs:
             Signature Bypass**.
 
           #### 🎯 Supported Gboard versions
-          - `18.6.3.1002251336-release-arm64-v8a`: all PATCH_COUNT patches.
-          - `18.5.4.993608717-release-arm64-v8a`: the newer additions, including the per-app
-            profiles, swipe, case-swipe and punctuation patches, glass effects and Field adaptation
-            (12 patches).
-          - `18.0.3.954559732-release-arm64-v8a` and `18.0.3`: the three original patches (Glide
-            Trail Customization, Backspace Repeat Haptic Feedback, Enter Key Tasker Event).
+          - `18.8.1.1022711984-beta-arm64-v8a` (arm64-v8a): the only supported build. Every patch
+            declares this target alone; older releases are no longer advertised.
 
           #### ⚠️ Known limitations
-          - Block Trackers, Keyboard Settings and Stop Remote Updates do not currently apply to
-            18.6.3; selecting them is skipped instead of failing the run.
+          - A patch whose audited targets do not resolve on this build is skipped instead of
+            failing the run, so a selection never bricks the install.
 
           #### 📱 Add to Morphe App
           1. Open the **Morphe** app on your Android device.

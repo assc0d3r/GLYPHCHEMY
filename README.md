@@ -94,10 +94,11 @@ Stock Gboard is fine, but **Glyphchemy makes it elite.** It’s an open-source c
 
 | Gboard Target Build | Status | Coverage |
 | :--- | :---: | :--- |
-| `18.6.3.1002251336-release-arm64-v8a` | `🟢 Verified Fire` | **100% Support (All 89 Patches)** |
-| `18.8.0.1022711984-beta-arm64-v8a` | `🟡 Experimental` | Frosted Glass, Smart Bar Swipe, Spacing & Rambler |
-| `18.5.4.993608717-release-arm64-v8a` | `🟢 Smooth` | Gestures, Themes, Profiles & Dynamic Fields |
-| `18.0.3.954559732-release-arm64-v8a` | `⚪ OG Builds` | Glide Trail, Backspace Haptics & Enter Intent |
+| `18.8.1.1022711984-beta-arm64-v8a` | `🟢 Target` | The only build this suite patches |
+
+Older Gboard releases (18.6.3, 18.8.0, 18.5.4, 18.0.3) are no longer supported: every patch
+declares `18.8.1.1022711984-beta-arm64-v8a` alone, and a build outside that list is not offered a
+patch rather than being patched with targets that were not audited for it.
 
 ---
 
