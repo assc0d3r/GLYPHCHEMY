@@ -188,6 +188,26 @@ val appProfilePatch = bytecodePatch(
 }
 
 /**
+ * Packages the patch suite injects into the app.
+ *
+ * Their helpers are part of the dex by the time this patch runs - the extension carrier merges
+ * `gboard-patches.rve` for whichever feature needs it - and two of them test `imeOptions` for the
+ * same incognito flag the stock predicate does. Without this list the shape scan below finds them
+ * too and fails closed: pairing this patch with Frosted Glass (which pulls the carrier) reported
+ * `acpq.K` alongside `AtMentionSafety.isSensitiveOrIncognitoField` and
+ * `GboardManualIncognitoPolicy.stockRequested`. The predicate this patch wraps has to be Gboard's,
+ * so our own code is never a candidate.
+ */
+private val PATCH_OWNED_PACKAGES = listOf(
+    "Ldev/jason/gboardpatches/",
+    "Ldev/custom/gboardpatches/",
+    "Ldev/srwi/gintype/",
+)
+
+private fun isPatchOwned(type: String): Boolean =
+    PATCH_OWNED_PACKAGES.any(type::startsWith)
+
+/**
  * Gboard's incognito predicate: `Lesj.I()Z` in 18.6.3 reads the editor and tests `imeOptions` for
  * `IME_FLAG_NO_PERSONALIZED_LEARNING`; 18.8 keeps that test but takes the EditorInfo as a parameter
  * (`acpq.K(EditorInfo)Z`) and renamed the owner. Match the test itself so a moved or renamed
@@ -201,12 +221,14 @@ private fun BytecodePatchContext.resolveIncognitoPredicate(): MutableMethod {
     val withoutEditor = mutableListOf<Pair<String, String>>()
     val withEditor = mutableListOf<Pair<String, String>>()
     classDefForEach { classDef ->
-        classDef.methods.forEach { method ->
-            if (method.returnType != "Z" || !method.testsIncognitoOptions()) return@forEach
-            val parameters = method.parameterTypes.map { it.toString() }
-            when {
-                parameters.isEmpty() -> withoutEditor += classDef.type to method.name
-                parameters == listOf(EDITOR_INFO) -> withEditor += classDef.type to method.name
+        if (!isPatchOwned(classDef.type)) {
+            classDef.methods.forEach { method ->
+                if (method.returnType != "Z" || !method.testsIncognitoOptions()) return@forEach
+                val parameters = method.parameterTypes.map { it.toString() }
+                when {
+                    parameters.isEmpty() -> withoutEditor += classDef.type to method.name
+                    parameters == listOf(EDITOR_INFO) -> withEditor += classDef.type to method.name
+                }
             }
         }
     }
