@@ -36,6 +36,8 @@ val glideTrailSettingsPatch = resourcePatch(
             targets = listOf(
                 AppTarget(version = "18.0.3.954559732-release-arm64-v8a"),
                 AppTarget(version = "18.6.3.1002251336-release-arm64-v8a"),
+                AppTarget(version = "18.8.0.1022711984-beta-arm64-v8a"),
+                AppTarget(version = "18.8.1.1022711984-beta-arm64-v8a"),
                 AppTarget(version = "18.5.4.993608717-release-arm64-v8a"),
                 AppTarget(version = "18.0.3"),
                 AppTarget(version = null, isExperimental = true)
@@ -67,9 +69,10 @@ internal fun applyGlideTrailSettingsPatch(document: Document) {
     for (el in allElements) {
         val key = el.getAndroidAttr("key")
         // 18.0.3 used 0x7f140a54; Gboard 18.6.3 moved the same "Glide trail"
-        // preference to 0x7f140980 (string value remains pref_gesture_preview_trail).
+        // preference to 0x7f140980 and 18.8 to 0x7f140998 (the string value remains
+        // pref_gesture_preview_trail).
         if (key.contains("0x7f140a54") || key.contains("0x7f140980") ||
-            key.contains("0x7f140999") ||
+            key.contains("0x7f140998") || key.contains("0x7f140999") ||
             key.contains("pref_gesture_preview_trail")
         ) {
             gestureTrailPref = el
@@ -94,8 +97,10 @@ internal fun applyGlideTrailSettingsPatch(document: Document) {
         found
     }
 
+    // Only reuse the anchor's own key. A resource id copied from an older release does not exist
+    // in a later one, and a dangling @string reference aborts the resource rebuild instead of
+    // leaving the category visible.
     val dependencyKey = gestureTrailPref?.getAndroidAttr("key")?.takeIf { it.isNotEmpty() }
-        ?: "@string/_0_resource_name_obfuscated_res_0x7f140a54"
 
     fun createSwitch(
         key: String,

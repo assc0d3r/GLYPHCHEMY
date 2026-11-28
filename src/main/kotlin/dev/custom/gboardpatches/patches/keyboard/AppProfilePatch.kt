@@ -2,11 +2,15 @@ package dev.custom.gboardpatches.patches.keyboard
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.AppTarget
+import app.morphe.patcher.patch.BytecodePatchContext
 import app.morphe.patcher.patch.Compatibility
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
+import com.android.tools.smali.dexlib2.iface.Method
+import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
+import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 import dev.custom.gboardpatches.patches.extras.injectStaticCallOnParamType
 import dev.jason.gboardpatches.patches.gboard.shared.isOpcode
@@ -16,6 +20,10 @@ private const val IME_CLASS = "Lcom/google/android/libraries/inputmethod/ime/Abs
 private const val IME_CLASS_NAME = "com/google/android/libraries/inputmethod/ime/AbstractIme"
 private const val INCOGNITO_OWNER = "Lesj;"
 private const val EDITOR_INFO = "Landroid/view/inputmethod/EditorInfo;"
+private const val CONTEXT = "Landroid/content/Context;"
+
+/** `EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING`, the flag the incognito predicate tests. */
+private const val INCOGNITO_OPTIONS_MASK = 0x1000000
 private const val HELPER_CLASS = "Ldev/custom/gboardpatches/keyboard/AppProfileRuntime;"
 private const val CANDIDATE_HOLDER_CLASS =
     "Lcom/google/android/apps/inputmethod/latin/keyboard/widget/LatinFixedCountCandidatesHolderView;"
@@ -32,11 +40,12 @@ private const val ARRAY_LIST = "Ljava/util/ArrayList;"
  *
  * Three hooks, all restricting:
  * - `AbstractIme.fz` (onActivate) receives the EditorInfo before keyboard inflation. The service
- *   itself is not a `Context` in 18.6.3 (its superclass is `Object`), so the context comes from
- *   the `C` field the IME already keeps. The runtime records the package, its field kind and the
- *   matching rule for the session.
- * - `Lesj.I()Z` is the incognito predicate the manual Incognito feature already wraps, so a profile
- *   that asks for incognito joins the same gate instead of introducing a second one.
+ *   itself is not a `Context` (its superclass is `Object`), so the context comes from the Context
+ *   field the IME already keeps (`C` in 18.6.3, `E` in 18.8). The runtime records the package, its
+ *   field kind and the matching rule for the session.
+ * - The incognito predicate - `Lesj.I()Z` in 18.6.3, `acpq.K(EditorInfo)Z` in 18.8 - is the check
+ *   the manual Incognito feature already wraps, so a profile that asks for incognito joins the
+ *   same gate instead of introducing a second one.
  * - `LatinFixedCountCandidatesHolderView.D` binds the candidate chips; a profile with suggestions
  *   off hands it an empty list, so the strip shows nothing while the rest of the binding stays
  *   stock.
@@ -60,6 +69,8 @@ val appProfilePatch = bytecodePatch(
             packageName = "com.google.android.inputmethod.latin",
             targets = listOf(
                 AppTarget(version = "18.6.3.1002251336-release-arm64-v8a"),
+                AppTarget(version = "18.8.0.1022711984-beta-arm64-v8a"),
+                AppTarget(version = "18.8.1.1022711984-beta-arm64-v8a"),
                 AppTarget(version = "18.5.4.993608717-release-arm64-v8a"),
                 AppTarget(version = null, isExperimental = true),
             ),
@@ -72,10 +83,30 @@ val appProfilePatch = bytecodePatch(
         val ime = mutableClassDefByOrNull(IME_CLASS)
             ?: error("Gboard input method base class not found.")
 
-        val onActivate = ime.methods.firstOrNull { method ->
-            method.name == "fz" && method.returnType == "V" &&
-                method.parameterTypes == listOf(EDITOR_INFO, "Z", "Lpwf;")
-        } ?: error("Gboard activation handler $IME_CLASS_NAME->fz(EditorInfo;ZLpwf;)V not found.")
+        var contextFieldName: String? = null
+        classDefForEach { classDef ->
+            if (classDef.type == IME_CLASS) {
+                contextFieldName = classDef.instanceFields.firstOrNull { it.type == CONTEXT }?.name
+            }
+        }
+        val contextField = contextFieldName
+            ?: error("Gboard input method base class keeps no $CONTEXT field.")
+
+        // The activation handler is `fz(EditorInfo;Z,Lpwf;)V` in 18.6.3 and `dM(EditorInfo;Z,Lagoo;)V`
+        // in 18.8, so match the shape (EditorInfo, boolean, one object) rather than the names.
+        val activationCandidates = ime.methods.filter { method ->
+            method.returnType == "V" &&
+                method.parameterTypes.size == 3 &&
+                method.parameterTypes[0] == EDITOR_INFO &&
+                method.parameterTypes[1] == "Z" &&
+                method.parameterTypes[2].toString().startsWith("L")
+        }
+        val onActivate = activationCandidates.firstOrNull { it.name == "fz" }
+            ?: activationCandidates.singleOrNull()
+            ?: error(
+                "Gboard activation handler (EditorInfo;Z,L..;)V not found, candidates: " +
+                    activationCandidates.map { it.name },
+            )
 
         if (!onActivate.callsAppProfileRuntime("onActivate")) {
             // The profile has to be known before the stock body builds the keyboard: no flicker
@@ -83,15 +114,13 @@ val appProfilePatch = bytecodePatch(
             onActivate.addInstructions(
                 0,
                 """
-                    iget-object v0, p0, $IME_CLASS->C:Landroid/content/Context;
-                    invoke-static {v0, p1}, $HELPER_CLASS->onActivate(Landroid/content/Context;$EDITOR_INFO)V
+                    iget-object v0, p0, $IME_CLASS->$contextField:$CONTEXT
+                    invoke-static {v0, p1}, $HELPER_CLASS->onActivate($CONTEXT$EDITOR_INFO)V
                 """.trimIndent(),
             )
         }
 
-        val incognito = mutableClassDefByOrNull(INCOGNITO_OWNER)?.methods?.firstOrNull { method ->
-            method.name == "I" && method.returnType == "Z" && method.parameterTypes.isEmpty()
-        } ?: error("Gboard incognito predicate $INCOGNITO_OWNER->I()Z not found.")
+        val incognito = resolveIncognitoPredicate()
 
         if (!incognito.callsAppProfileRuntime("applyIncognito")) {
             incognito.delegateBooleanReturns("applyIncognito")
@@ -101,9 +130,12 @@ val appProfilePatch = bytecodePatch(
         // there, so a missing bind method is not a patch failure.
         mutableClassDefByOrNull(CANDIDATE_HOLDER_CLASS)
             ?.methods
-            ?.firstOrNull { method ->
-                method.name == "D" && method.returnType == "V" &&
-                    method.parameterTypes == listOf(LIST, ARRAY_LIST)
+            ?.let { methods ->
+                val binds = methods.filter { method ->
+                    method.returnType == "V" &&
+                        method.parameterTypes == listOf(LIST, ARRAY_LIST)
+                }
+                binds.firstOrNull { it.name == "D" } ?: binds.singleOrNull()
             }
             ?.let { bind ->
                 if (!bind.callsAppProfileRuntime("applySuggestionPolicy")) {
@@ -120,16 +152,20 @@ val appProfilePatch = bytecodePatch(
         // The Saved rules row shows the count and the packages it covers while Gboard's
         // Preferences screen loads. `CommonPreferenceFragment->aH(int, PreferenceGroup)` walks
         // every preference group after the screen is inflated - the same hook the glide-trail
-        // summaries use - so the row is readable without opening the field. Only aH is hooked:
-        // aX calls aH for the same tree (often with a null group), so hooking both would refresh
-        // every row twice.
+        // summaries use - so the row is readable without opening the field. The walker is matched
+        // by shape because the name moves (`aH` in 18.6.3, `aL` and `bc` in 18.8); when the old
+        // name is still there only it is hooked, since its sibling `aX` calls it for the same tree
+        // and both would refresh every row twice. The refresh only rewrites summaries, so a release
+        // that clips the old name twice per screen load is harmless.
         mutableClassDefByOrNull(COMMON_PREFERENCE_FRAGMENT)?.let { fragment ->
-            val groupWalkers = fragment.methods.filter { method ->
-                method.name == "aH" && method.returnType == "V" &&
+            val walkers = fragment.methods.filter { method ->
+                method.returnType == "V" &&
                     method.parameterTypes.size == 2 &&
                     method.parameterTypes[0] == "I" &&
                     method.parameterTypes[1].toString() == PREFERENCE_GROUP
             }
+            val named = walkers.filter { it.name == "aH" }
+            val groupWalkers = if (named.isNotEmpty()) named else walkers
             groupWalkers.forEach { group ->
                 group.injectStaticCallOnParamType(
                     hookOwner = HELPER_CLASS,
@@ -152,6 +188,64 @@ val appProfilePatch = bytecodePatch(
             "Per-app profile incognito hook was not installed."
         }
     }
+}
+
+/**
+ * Gboard's incognito predicate: `Lesj.I()Z` in 18.6.3 reads the editor and tests `imeOptions` for
+ * `IME_FLAG_NO_PERSONALIZED_LEARNING`; 18.8 keeps that test but takes the EditorInfo as a parameter
+ * (`acpq.K(EditorInfo)Z`) and renamed the owner. Match the test itself so a moved or renamed
+ * predicate still resolves, and fail closed when the APK offers more than one candidate.
+ */
+private fun BytecodePatchContext.resolveIncognitoPredicate(): MutableMethod {
+    mutableClassDefByOrNull(INCOGNITO_OWNER)?.methods?.firstOrNull { method ->
+        method.name == "I" && method.returnType == "Z" && method.parameterTypes.isEmpty()
+    }?.let { return it }
+
+    val withoutEditor = mutableListOf<Pair<String, String>>()
+    val withEditor = mutableListOf<Pair<String, String>>()
+    classDefForEach { classDef ->
+        classDef.methods.forEach { method ->
+            if (method.returnType != "Z" || !method.testsIncognitoOptions()) return@forEach
+            val parameters = method.parameterTypes.map { it.toString() }
+            when {
+                parameters.isEmpty() -> withoutEditor += classDef.type to method.name
+                parameters == listOf(EDITOR_INFO) -> withEditor += classDef.type to method.name
+            }
+        }
+    }
+
+    val chosen = when {
+        withoutEditor.size == 1 -> withoutEditor.single()
+        withoutEditor.isEmpty() -> withEditor.singleOrNull()
+        else -> null
+    } ?: error(
+        "FAIL-CLOSED: expected one incognito predicate, found $withoutEditor and $withEditor",
+    )
+
+    val owner = mutableClassDefByOrNull(chosen.first)
+        ?: error("Gboard incognito predicate owner ${chosen.first} not found.")
+    return owner.methods.first { method -> method.name == chosen.second }
+}
+
+private fun Method.testsIncognitoOptions(): Boolean {
+    val instructions = implementation?.instructions ?: return false
+    var readsOptions = false
+    var masksOptions = false
+    for (instruction in instructions) {
+        val reference = (instruction as? ReferenceInstruction)?.reference
+        if (reference is FieldReference &&
+            reference.definingClass == EDITOR_INFO &&
+            reference.name == "imeOptions"
+        ) {
+            readsOptions = true
+        }
+        if (instruction is NarrowLiteralInstruction &&
+            instruction.narrowLiteral.toInt() == INCOGNITO_OPTIONS_MASK
+        ) {
+            masksOptions = true
+        }
+    }
+    return readsOptions && masksOptions
 }
 
 private fun MutableMethod.callsAppProfileRuntime(name: String): Boolean =
