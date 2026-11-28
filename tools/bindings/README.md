@@ -17,6 +17,10 @@ JAVA="/c/Program Files/Eclipse Adoptium/jdk-25.0.4.101-hotspot/bin/java"
 - `MethodRefs.java <apk> '<owner;>' [name]` — methods that call a method.
 - `FieldRefs.java <apk> '<class;>' [field]` — field reads and writes, with their methods.
 - `StringRefs.java <apk> <substring> [--exact]` — methods that reference a string literal.
+- `DexQuery.java <apk> index|sig|paramsig|field` — searches members by shape, or prints the whole
+  `METHOD`/`FIELD` index so a release can be grepped.
+- `StructuralFingerprint.java <apk> '<class;>' <method> '<params>' <return>` — prints the SHA-256 a
+  patch compares a stock body against, using the algorithm in `GboardStructuralFingerprint.kt`.
 - `ProposeRetarget.java` — suggests replacement targets for a drifted binding.
 
 Each exits 0 when something matched, 1 when nothing did, 2 on a usage or read error, so an empty

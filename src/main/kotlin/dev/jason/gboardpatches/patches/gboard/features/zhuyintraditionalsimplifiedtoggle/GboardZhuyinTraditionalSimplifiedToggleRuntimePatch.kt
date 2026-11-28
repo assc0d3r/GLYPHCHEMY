@@ -1,13 +1,16 @@
 package dev.jason.gboardpatches.patches.gboard.features.zhuyintraditionalsimplifiedtoggle
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.patch.BytecodePatchContext
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.proxy.mutableTypes.MutableClass
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
+import dev.jason.gboardpatches.patches.gboard.shared.GboardMethodTarget
 import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardVersionBindings
+import dev.jason.gboardpatches.patches.gboard.shared.selectReleaseTargets
 import dev.jason.gboardpatches.patches.gboard.shared.gboardStructuralFingerprint
 import dev.jason.gboardpatches.patches.gboard.shared.gboardPatchesExtensionCarrierPatch
 import dev.jason.gboardpatches.patches.gboard.shared.isInvoke
@@ -30,9 +33,14 @@ private const val GBOARD_18_5_3_POPUP_STOCK_FINGERPRINT =
 private const val GBOARD_18_6_3_POPUP_STOCK_FINGERPRINT =
     "73e29b09de5c80e0c03396b7507e9f3c80e4b9855cf502632f69cef58a6b460e"
 
+// 18.8.0 popup body: the same stock shape again, recompiled against the renamed key-data class.
+private const val GBOARD_18_8_POPUP_STOCK_FINGERPRINT =
+    "8de88d6378242fbcafbf522264798fceda0f9d64a95bbc6802da99d72bbe6f5f"
+
 private val ACCEPTED_POPUP_STOCK_FINGERPRINTS = setOf(
     GBOARD_18_5_3_POPUP_STOCK_FINGERPRINT,
     GBOARD_18_6_3_POPUP_STOCK_FINGERPRINT,
+    GBOARD_18_8_POPUP_STOCK_FINGERPRINT,
 )
 private val POPUP_TARGET_ACCESS_FLAGS = AccessFlags.PUBLIC.value
 
@@ -44,14 +52,44 @@ internal val gboardZhuyinTraditionalSimplifiedTogglePopupPatch = bytecodePatch(
     dependsOn(gboardPatchesExtensionCarrierPatch)
 
     execute {
-        GboardVersionBindings.zhuyinTogglePopupAction
-            .ownerClass(this)
-            .applyZhuyinTogglePopupActionPatch()
+        val binding = zhuyinTogglePopupAction(this)
+        binding.ownerClass(this).applyZhuyinTogglePopupActionPatch(binding)
     }
 }
 
-internal fun MutableClass.applyZhuyinTogglePopupActionPatch() {
-    val plan = ZhuyinTogglePopupTransformationPlan.preflight(this)
+/**
+ * The popup action the toggle rewrites.
+ *
+ * 18.8.0 keeps the class, the name and every parameter, and only renames the key-data type the
+ * method returns: `Lpva;` on 18.6.3, `Lagmb;` on 18.8.0 - the same class the 18.8 SoftKey metadata
+ * table calls a key data. Choosing by what the APK's `BasicPopupView` actually declares keeps the
+ * delegation body's `check-cast` on the matching type.
+ */
+internal fun zhuyinTogglePopupAction(context: BytecodePatchContext): GboardMethodTarget =
+    selectReleaseTargets(
+        context = context,
+        projection = { GboardVersionBindings.zhuyinTogglePopupAction },
+        probe = { target -> target },
+        audited = ZHUYIN_TOGGLE_POPUP_18_8,
+    )
+
+private val ZHUYIN_TOGGLE_POPUP_18_8 = GboardMethodTarget(
+    classType = "Lcom/google/android/libraries/inputmethod/popup/BasicPopupView;",
+    name = "b",
+    parameterTypes = listOf(
+        "Lcom/google/android/libraries/inputmethod/widgets/SoftKeyboardView;",
+        "Landroid/view/View;",
+        "F",
+        "F",
+        "Lcom/google/android/libraries/inputmethod/metadata/ActionDef;",
+        "[I",
+        "Z",
+    ),
+    returnType = "Lagmb;",
+)
+
+internal fun MutableClass.applyZhuyinTogglePopupActionPatch(binding: GboardMethodTarget) {
+    val plan = ZhuyinTogglePopupTransformationPlan.preflight(this, binding)
     plan.commit()
 }
 
@@ -66,8 +104,11 @@ private data class ZhuyinTogglePopupTransformationPlan(
     }
 
     companion object {
-        fun preflight(ownerClass: MutableClass): ZhuyinTogglePopupTransformationPlan {
-            val target = ownerClass.resolvePopupTargetReadOnly()
+        fun preflight(
+            ownerClass: MutableClass,
+            binding: GboardMethodTarget,
+        ): ZhuyinTogglePopupTransformationPlan {
+            val target = ownerClass.resolvePopupTargetReadOnly(binding)
             target.requirePopupImplementation()
             if (target.hasAnyPopupRuntimeState()) {
                 target.verifyExactPatchedPopupState()
@@ -76,7 +117,7 @@ private data class ZhuyinTogglePopupTransformationPlan(
 
             target.requireExact1853PopupStockFingerprint()
             val candidate = MutableClass(ownerClass)
-            val candidateTarget = GboardVersionBindings.zhuyinTogglePopupAction.resolve(candidate)
+            val candidateTarget = binding.resolve(candidate)
             candidateTarget.addInstructions(0, ZHUYIN_TOGGLE_POPUP_DELEGATE)
             candidateTarget.verifyExactPatchedPopupState()
 
@@ -89,8 +130,7 @@ private data class ZhuyinTogglePopupTransformationPlan(
     }
 }
 
-private fun MutableClass.resolvePopupTargetReadOnly(): MutableMethod {
-    val binding = GboardVersionBindings.zhuyinTogglePopupAction
+private fun MutableClass.resolvePopupTargetReadOnly(binding: GboardMethodTarget): MutableMethod {
     val exact = methods.filter(binding::matches)
     check(exact.size <= 1) { "Ambiguous popup target: ${binding.reference}" }
     exact.singleOrNull()?.let { return it }
@@ -110,7 +150,7 @@ private fun MutableClass.resolvePopupTargetReadOnly(): MutableMethod {
 private fun MutableMethod.requirePopupImplementation() {
     check(accessFlags == POPUP_TARGET_ACCESS_FLAGS && implementation != null) {
         "Unexpected popup target access or implementation: " +
-            GboardVersionBindings.zhuyinTogglePopupAction.reference
+            ZHUYIN_TOGGLE_POPUP_18_8.reference
     }
 }
 
@@ -186,6 +226,9 @@ private fun com.android.tools.smali.dexlib2.iface.instruction.Instruction
         reference.name == POPUP_RUNTIME_ABI.name
 }
 
+/** Both releases declare the same parameters; only the returned key-data type differs. */
+private val POPUP_ACTION_TYPES = ZHUYIN_TOGGLE_POPUP_18_8.parameterTypes
+
 private data class PopupRegisterLayout(
     val parameterWordOffsets: List<Int>,
     val parameterWordCount: Int,
@@ -195,7 +238,7 @@ private data class PopupRegisterLayout(
 
     companion object {
         fun fromBinding(): PopupRegisterLayout {
-            val parameters = GboardVersionBindings.zhuyinTogglePopupAction.parameterTypes
+            val parameters = POPUP_ACTION_TYPES
             var nextWord = 1
             val offsets = parameters.map { type ->
                 nextWord.also { nextWord += if (type == "J" || type == "D") 2 else 1 }

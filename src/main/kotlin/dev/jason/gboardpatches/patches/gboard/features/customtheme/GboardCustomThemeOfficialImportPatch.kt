@@ -7,7 +7,6 @@ import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
 import app.morphe.patcher.util.smali.ExternalLabel
 import com.android.tools.smali.dexlib2.AccessFlags
 import dev.jason.gboardpatches.patches.gboard.shared.findMutableMethodOrThrow
-import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardVersionBindings
 import dev.jason.gboardpatches.patches.gboard.shared.gboardPatchesExtensionCarrierPatch
 import dev.jason.gboardpatches.patches.gboard.shared.gboardStructuralFingerprint
 import dev.jason.gboardpatches.patches.gboard.shared.isMethodReference
@@ -23,36 +22,36 @@ internal val gboardCustomThemeOfficialImportPatch = bytecodePatch(
     dependsOn(gboardPatchesExtensionCarrierPatch)
 
     execute {
-        val (plusHandler, resultHandler) = validateCustomThemeTargetContract()
+        val targets = customThemeTargets(this)
+        val (plusHandler, resultHandler) = validateCustomThemeTargetContract(targets)
         plusHandler.applyCustomThemeGuard(
             RuntimeCallId.CUSTOM_THEME_RUNTIME_INTERCEPT_PLUS,
             "p0 .. p3",
             "custom_theme_plus_continue",
-            CUSTOM_THEME_PLUS_STOCK_REGISTERS,
+            targets.plusStockRegisters,
         )
         resultHandler.applyCustomThemeGuard(
             RuntimeCallId.CUSTOM_THEME_RUNTIME_HANDLE_ACTIVITY_RESULT,
             "p0 .. p3",
             "custom_theme_result_continue",
-            CUSTOM_THEME_RESULT_STOCK_REGISTERS,
+            targets.resultStockRegisters,
         )
     }
 }
 
 context(context: app.morphe.patcher.patch.BytecodePatchContext)
-private fun validateCustomThemeTargetContract(): Pair<MutableMethod, MutableMethod> = with(context) {
-    check(GboardVersionBindings.targetVersion == "18.6.3") {
-        "Unsupported Custom Theme stock contract for ${GboardVersionBindings.targetVersion}"
-    }
+private fun validateCustomThemeTargetContract(
+    targets: CustomThemeTargets,
+): Pair<MutableMethod, MutableMethod> = with(context) {
     val publicFinal = AccessFlags.PUBLIC.value or AccessFlags.FINAL.value
     val publicStatic = AccessFlags.PUBLIC.value or AccessFlags.STATIC.value
-    val plusHandler = findMutableMethodOrThrow(GboardVersionBindings.customThemePlusHandler)
-    val resultHandler = findMutableMethodOrThrow(GboardVersionBindings.customThemeResultHandler)
+    val plusHandler = findMutableMethodOrThrow(targets.plusHandler)
+    val resultHandler = findMutableMethodOrThrow(targets.resultHandler)
     listOf(
         plusHandler,
         resultHandler,
-        findMutableMethodOrThrow(GboardVersionBindings.customThemePeerResultHandler),
-        findMutableMethodOrThrow(GboardVersionBindings.customThemeLauncherLaunch),
+        findMutableMethodOrThrow(targets.peerResultHandler),
+        findMutableMethodOrThrow(targets.launcherLaunch),
     ).forEach { method ->
         check(method.accessFlags == publicFinal && method.implementation != null) {
             "Unexpected Custom Theme method shape for ${method.definingClass}->${method.name}"
@@ -60,24 +59,25 @@ private fun validateCustomThemeTargetContract(): Pair<MutableMethod, MutableMeth
     }
     plusHandler.requireStockFingerprintUnlessPatched(
         RuntimeCallId.CUSTOM_THEME_RUNTIME_INTERCEPT_PLUS,
-        CUSTOM_THEME_PLUS_1863_FINGERPRINT,
+        targets.plusFingerprint,
+        targets.release,
     )
     resultHandler.requireStockFingerprintUnlessPatched(
         RuntimeCallId.CUSTOM_THEME_RUNTIME_HANDLE_ACTIVITY_RESULT,
-        CUSTOM_THEME_RESULT_1863_FINGERPRINT,
+        targets.resultFingerprint,
+        targets.release,
     )
-    findMutableMethodOrThrow(GboardVersionBindings.customThemeValidator).let { method ->
+    findMutableMethodOrThrow(targets.validator).let { method ->
         check(method.accessFlags == publicStatic && method.implementation != null) {
             "Unexpected Custom Theme validator shape for ${method.definingClass}->${method.name}"
         }
     }
-    check(GboardVersionBindings.customThemeFragmentPeerField.resolve(this).accessFlags ==
-        AccessFlags.PUBLIC.value) {
+    check(targets.fragmentPeerField.resolve(this).accessFlags == AccessFlags.PUBLIC.value) {
         "Unexpected Custom Theme fragment peer field shape"
     }
     listOf(
-        GboardVersionBindings.customThemePeerContextField,
-        GboardVersionBindings.customThemePeerLauncherField,
+        targets.peerContextField,
+        targets.peerLauncherField,
     ).forEach { binding ->
         check(binding.resolve(this).accessFlags == publicFinal) {
             "Unexpected Custom Theme peer field shape for ${binding.reference}"
@@ -89,12 +89,13 @@ private fun validateCustomThemeTargetContract(): Pair<MutableMethod, MutableMeth
 internal fun MutableMethod.requireStockFingerprintUnlessPatched(
     call: RuntimeCallId,
     expected: String,
+    release: String,
 ) {
     val runtimeReference = RuntimeAbiCatalog.abi(call).reference
     if (implementation!!.instructions.any { it.isMethodReference(runtimeReference) }) return
     val actual = gboardStructuralFingerprint()
     check(actual == expected) {
-        "Unexpected 18.6.3 Custom Theme fingerprint for $definingClass->$name: " +
+        "Unexpected $release Custom Theme fingerprint for $definingClass->$name: " +
             "$actual != $expected"
     }
 }

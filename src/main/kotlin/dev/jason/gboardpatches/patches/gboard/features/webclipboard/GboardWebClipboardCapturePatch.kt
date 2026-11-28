@@ -26,7 +26,11 @@ import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeAbiCatalo
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallEmitter
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallId
 
-private const val LATIN_IME_SERVICE_CLASS = "Lpbk;"
+// 18.8 renamed the Latin IME service to Lafae;. The rest of the stock contract below hold on that
+// class unchanged: onCreate()V is public final with 12 registers, receiver in v11, the last use of
+// the proven-dead local in v9 is the aput-object that ends the tracing array, and the body still
+// carries three catchall THROWs across six try blocks with three shared handlers.
+private const val LATIN_IME_SERVICE_CLASS = "Lafae;"
 private const val INPUT_METHOD_SERVICE_CLASS =
     "Landroid/inputmethodservice/InputMethodService;"
 private const val TARGET_METHOD_NAME = "onCreate"
@@ -37,7 +41,10 @@ private const val SUPER_ON_CREATE_DESCRIPTOR =
     "$INPUT_METHOD_SERVICE_CLASS->onCreate()V"
 private const val STOCK_REGISTER_COUNT = 12
 private const val STOCK_RECEIVER_REGISTER = 11
-private const val SAVED_RECEIVER_REGISTER = 9
+// 18.8 re-splits the register file: v9 carries the tracing array length and stays live until the
+// monitor notification, while v10's last use is the aput-object that closes the tracing arguments,
+// which is the proven-dead local the receiver save is anchored to.
+private const val SAVED_RECEIVER_REGISTER = 10
 private const val STOCK_THROW_COUNT = 3
 private const val STOCK_TRY_BLOCK_COUNT = 6
 private const val STOCK_CATCHALL_HANDLER_COUNT = 3

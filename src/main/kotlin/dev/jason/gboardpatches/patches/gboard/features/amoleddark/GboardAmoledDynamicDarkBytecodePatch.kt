@@ -9,7 +9,6 @@ import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 import dev.jason.gboardpatches.patches.shared.Constants.COMPATIBILITY_GBOARD
-import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardVersionBindings
 
 /**
  * Gboard paints its Material-coloured keyboard from the palette built by `Lrgr;`, the only class
@@ -38,13 +37,9 @@ internal val gboardAmoledDynamicDarkBytecodePatch = bytecodePatch(
     compatibleWith(COMPATIBILITY_GBOARD)
 
     execute {
-        val isLight = GboardVersionBindings.dynamicDarkPaletteIsLightField
-        val targets = listOf(
-            GboardVersionBindings.dynamicDarkPaletteSurfaceDimField,
-            GboardVersionBindings.dynamicDarkPaletteSurfaceContainerField,
-            GboardVersionBindings.dynamicDarkPaletteSurfaceContainerLowField,
-            GboardVersionBindings.dynamicDarkPaletteSurfaceContainerLowestField,
-        )
+        val palette = amoledDarkTargets(this)
+        val isLight = palette.isLight
+        val targets = palette.surfaceFields
         check(isLight.type == "Z") { "Unexpected ${isLight.reference} type ${isLight.type}" }
         isLight.resolve(this)
         targets.forEach { target ->
@@ -52,7 +47,7 @@ internal val gboardAmoledDynamicDarkBytecodePatch = bytecodePatch(
             target.resolve(this)
         }
 
-        GboardVersionBindings.dynamicDarkPaletteConstructor.resolve(this).applyAmoledDarkPalette(
+        palette.paletteConstructor.resolve(this).applyAmoledDarkPalette(
             isLightField = isLight.reference,
             surfaceFields = targets.map { it.reference },
         )

@@ -304,3 +304,86 @@ Expect `resolved: 4`, `unresolved: 0`, the three-instruction forward on `Lagyn;-
 release, so a port starts from a shortlist instead of a fresh search. It re-derives every
 unresolved target by shape, reports the class hypotheses and successor classes it relied on, and
 `--emit-audit` writes the accepted proposals back in the format above so `BindingAudit` can re-check them.
+
+## Four 18.6.3-only patches on 18.8.0
+
+AMOLED dark keyboard, Web Clipboard, Custom Theme and the Zhuyin toggle worked on 18.6.3 and failed
+on 18.8.1. Each was re-derived against
+**18.8.1.1022711984-beta-arm64-v8a**, sha256
+`cfcfda213cc2d8b4ed88e6a13e2aa6f3bf78cf33771b90a217aa783f80c67f6e` (the 18.8.0 upload,
+`d1406caa270011aaea2a58bf828a3ffd94a58927a53688dc7bcd26e537c4d34b`, differs only in
+`classes.dex`), and each is proven by its own `INFO: Applied:` line.
+
+### AMOLED dark keyboard — `Lajeb;`
+
+18.6.3 built the Material palette in `Lrgr;`; 18.8 renamed it to `Lajeb;` and every shape survived:
+`<init>(Context;Z)` with fourteen registers, the is-light flag as `a:Z`, and one `int` field per
+`color_gm3_*` token. The four surfaces the patch blacks out are named by the tokens in
+`Lajeb;->a()Lajmv;`:
+
+```
+iget v1, v3, Lajeb;->P:I   const-string "color_gm3_surface_dim"
+iget v1, v3, Lajeb;->Q:I   const-string "color_gm3_surface_container"
+iget v1, v3, Lajeb;->R:I   const-string "color_gm3_surface_container_low"
+iget v1, v3, Lajeb;->S:I   const-string "color_gm3_surface_container_lowest"
+```
+
+The letters match 18.6.3 because the constructor feeds the same token table in the same order; the
+tokens, not the letters, are the evidence. Recorded in `GboardAmoledDarkTargets.kt`.
+
+### Web Clipboard — `Lafae;`
+
+Only the IME service class moved (`Lpbk;` → `Lafae;`); the rest of the stock contract holds on its
+`onCreate()V`: twelve registers, receiver in v11, and three catchall THROWs across six try blocks
+with three shared handlers. The proven-dead local moved from v9 to v10 — 18.8 reuses v9 for the
+tracing array length up to the monitor notification, so v10, whose last use is the
+`aput-object v1, v2, v10` that closes the tracing arguments, is the dead register the receiver save
+anchors to.
+
+`MethodDump` used to print only two registers of a three-register instruction, which hides exactly
+that anchor; it now prints all three.
+
+### Custom Theme — `Lvmj;`, `Lvmb;`, `Lvku;`, `Lajgb;`
+
+18.8 renames the theme-listing cluster while keeping the shapes:
+
+- plus handler `Lkbl;->f(Lkbf;Lkbo;I)V` → `Lvmj;->c(Lvmh;Lvmn;I)V`: `public final`, six registers,
+  and it is the enum method that builds the `ThemeBuilderActivity` intent and calls the presenter's
+  launcher with request code 101/102;
+- presenter `Lkbf;` → `Lvmb;`: `b:Landroid/content/Context;`, `t:Lvku;` (the launcher) and
+  `j(Landroid/content/Intent;)V` all resolve on it;
+- launcher `Lquw;->E(Intent;I;Bundle)V` → `Lvku;->b(Landroid/content/Intent;ILandroid/os/Bundle;)V`;
+- activity result `ThemeListingFragment;->W(II,Intent)V` → the same class's `X(II,Intent)V`;
+- validator `Lrhw;->h(File)Z` → `Lajgb;->h(Ljava/io/File;)Z`, on the archive reader that turns a
+  file into a theme (`e(Context,File)` → `Lajgb;`, `f(File,List)` → a colour map).
+
+Both register counts (6 and 5) carry over unchanged. The stock fingerprints are new:
+
+```
+Lvmj;->c(Lvmh;Lvmn;I)V                      4a43629ebfda38c5d74e14116833f177c261c890b3231a4f56192f87eb557739
+ThemeListingFragment;->X(II,Intent;)V       113d1137ff039d25b4e1a925a3513a8ef8fe7d588f45243c9a6317884e3b9324
+```
+
+They were reproduced independently with
+`StructuralFingerprint.java <apk> 'Lvmj;' c 'Lvmh;Lvmn;I' V`, which agrees with the value the patch
+reports when it is handed a wrong expected hash.
+
+### Zhuyin toggle — `Lagmb;`
+
+`BasicPopupView;->b(SoftKeyboardView;View;FF;ActionDef;[I;Z)` keeps its class, name and every
+parameter, and only renames the key-data type it returns: `Lpva;` → `Lagmb;`, the same class the 18.8
+SoftKey metadata table already calls a key data. The stock body also changes, so the accepted set
+gains `8de88d6378242fbcafbf522264798fceda0f9d64a95bbc6802da99d72bbe6f5f`.
+
+### Re-checking
+
+```bash
+JAVA="/c/Users/…/tools/jdk-21.0.13+9/bin/java"
+./tools/apply-patch.sh "<the 18.8.1 APK>" /tmp/out.apk "AMOLED dark keyboard"
+./tools/apply-patch.sh "<the 18.8.1 APK>" /tmp/out.apk "Web Clipboard"
+./tools/apply-patch.sh "<the 18.8.1 APK>" /tmp/out.apk "Custom Theme"
+./tools/apply-patch.sh "<the 18.8.1 APK>" /tmp/out.apk "Zhuyin Quick Traditional/Simplified Toggle"
+```
+
+Each prints `applied: <name>`; nothing was run on a device, so only resolution and smali placement
+are proven.

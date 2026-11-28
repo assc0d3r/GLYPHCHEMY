@@ -9,6 +9,7 @@ import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstructio
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction;
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction;
 import com.android.tools.smali.dexlib2.iface.instruction.RegisterRangeInstruction;
+import com.android.tools.smali.dexlib2.iface.instruction.ThreeRegisterInstruction;
 import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction;
 import com.android.tools.smali.dexlib2.iface.instruction.WideLiteralInstruction;
 
@@ -142,6 +143,12 @@ public final class MethodDump {
             line.append(" {v").append(range.getStartRegister())
                     .append(" .. v").append(range.getStartRegister() + range.getRegisterCount() - 1)
                     .append("}");
+        } else if (insn instanceof ThreeRegisterInstruction three) {
+            // ThreeRegisterInstruction extends TwoRegisterInstruction, so it has to be tested first:
+            // the third register is the one that names an aput/aget index or a cmp operand, and
+            // hiding it makes a register-liveness gate unreadable.
+            line.append(" v").append(three.getRegisterA()).append(", v").append(three.getRegisterB())
+                    .append(", v").append(three.getRegisterC());
         } else if (insn instanceof TwoRegisterInstruction two) {
             line.append(" v").append(two.getRegisterA()).append(", v").append(two.getRegisterB());
         } else if (insn instanceof OneRegisterInstruction one) {
